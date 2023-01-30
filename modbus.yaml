@@ -1,0 +1,354 @@
+# modbus victron ess
+  - name: victron
+    retry_on_empty: true
+    retries: 10
+    type: tcp
+    host: 192.168.1.86
+    port: 502
+# REMARK: scan_interval: <5 can cause troubles
+
+# VE Bus sensors
+    sensors:
+    - name: 'VE AC Consumption L1'
+      unit_of_measurement: "W"
+      slave: 100
+      address: 817
+      data_type: uint16
+      scan_interval: 5
+      device_class: power
+
+    - name: 'VE AC Consumption L2'
+      unit_of_measurement: "W"
+      slave: 100
+      address: 818
+      data_type: uint16
+      scan_interval: 5
+      device_class: power
+
+    - name: 'VE AC Consumption L3'
+      unit_of_measurement: "W"
+      slave: 100
+      address: 819
+      data_type: uint16
+      scan_interval: 5
+      device_class: power
+  
+    - name: 'VE Critical Loads power L1'
+      unit_of_measurement: "W"
+      slave: 246
+      address: 23
+      data_type: int16
+      scale: 10
+      scan_interval: 5
+      device_class: power
+    
+    - name: 'VE Critical Loads power L2'
+      unit_of_measurement: "W"
+      slave: 246
+      address: 24
+      data_type: int16
+      scale: 10
+      scan_interval: 5
+      device_class: power
+    
+    - name: 'VE Critical Loads power L3'
+      unit_of_measurement: "W"
+      slave: 246
+      address: 25
+      data_type: int16
+      scale: 10
+      scan_interval: 5
+      device_class: power
+
+# GRID meter waarden
+    
+    - name: 'VE Grid Voltage L1'
+      unit_of_measurement: "V"
+      slave: 30
+      address: 2616
+      data_type: uint16
+      scan_interval: 5
+      scale: 0.1
+      precision: 1
+      device_class: voltage
+
+    - name: 'VE Grid Voltage L2'
+      unit_of_measurement: "V"
+      slave: 30
+      address: 2618
+      data_type: uint16
+      scan_interval: 5
+      scale: 0.1
+      precision: 1
+      device_class: voltage
+
+    - name: 'VE Grid Voltage L3'
+      unit_of_measurement: "V"
+      slave: 30
+      address: 2620
+      data_type: uint16
+      scan_interval: 5
+      scale: 0.1
+      precision: 1
+      device_class: voltage
+
+    - name: 'VE Grid Current L1'
+      unit_of_measurement: "A"
+      slave: 30
+      address: 2617
+      data_type: int16
+      scan_interval: 5
+      scale: 0.1
+      precision: 1
+      device_class: current
+
+    - name: 'VE Grid Current L2'
+      unit_of_measurement: "A"
+      slave: 30
+      address: 2619
+      data_type: int16
+      scan_interval: 5
+      scale: 0.1
+      precision: 1
+      device_class: current
+      
+    - name: 'VE Grid Current L3'
+      unit_of_measurement: "A"
+      slave: 30
+      address: 2621
+      data_type: int16
+      scan_interval: 5
+      scale: 0.1
+      precision: 1
+      device_class: current
+
+    - name: 'VE Grid Power L1'
+      unit_of_measurement: "W"
+      slave: 30
+      address: 2600
+      data_type: int16
+      scan_interval: 5
+      scale: 1
+      precision: 0
+      device_class: power
+
+    - name: 'VE Grid Power L2'
+      unit_of_measurement: "W"
+      slave: 30
+      address: 2601
+      data_type: int16
+      scan_interval: 5
+      scale: 1
+      precision: 0
+      device_class: power
+
+    - name: 'VE Grid Power L3'
+      unit_of_measurement: "W"
+      slave: 30
+      address: 2602
+      data_type: int16
+      scan_interval: 5
+      scale: 1
+      precision: 0
+      device_class: power
+
+    - name: 'VE Grid Total Energy from Grid'
+      unit_of_measurement: "kWh"
+      slave: 30
+      address: 2634
+      data_type: uint32
+      scan_interval: 5
+      scale: 0.01
+      precision: 1
+      device_class: energy
+      state_class: total_increasing
+
+    - name: 'VE Grid Total Energy to Grid'
+      unit_of_measurement: "kWh"
+      slave: 30
+      address: 2636
+      data_type: uint32
+      scan_interval: 5
+      scale: 0.01
+      precision: 1
+      device_class: energy
+      state_class: total_increasing
+
+
+# ESS Settings
+    - name: 'VE ESS Minimum SoC setpoint'
+      unit_of_measurement: "%"
+      data_type: uint16
+      slave: 100
+      address: 2901
+      scan_interval: 5
+      scale: 0.1
+      
+    - name: 'VE Maximum System Grid Feed In'
+      unit_of_measurement: "W"
+      data_type: uint16
+      slave: 100
+      address: 2706
+      scale: 0.01
+      device_class: power
+      # command_on: 4000
+      # command_off: 40
+      # verify_state: false
+
+    - name: 'VE ESS BatteryLife state'
+      data_type: uint16
+      slave: 100
+      address: 2900
+      scan_interval: 5
+      
+    - name: 'VE ESS Grid setpoint'
+      unit_of_measurement: "W"
+      data_type: int16
+      slave: 100
+      address: 2700
+      device_class: power
+
+#Battery 
+    - name: 'VE Battery current'
+      unit_of_measurement: "A DC"
+      slave: 100
+      address: 841
+      data_type: int16
+      scale: 0.1
+      precision: 1
+      device_class: current
+      
+    - name: 'VE Battery Power System'
+      unit_of_measurement: "W"
+      slave: 100
+      address: 842
+      data_type: int16
+      scale: 1.0
+      precision: 0
+      device_class: power
+
+      # VE Charge power. deze gebruiken voor omrekenen van min en pos
+    - name: 'VE Charge Power System'
+      unit_of_measurement: "W"
+      slave: 100
+      address: 866
+      data_type: int16
+      scale: 1.0
+      precision: 0
+      device_class: energy
+      
+    - name: 'VE Battery State of Charge System'
+      unit_of_measurement: "%"
+      slave: 100
+      address: 843
+      data_type: uint16
+      scale: 1
+      precision: 0
+
+    - name: 'VE Battery Discharged Energy'
+      unit_of_measurement: "kWh"
+      slave: 245
+      address: 301
+      data_type: uint16
+      scale: 0.1
+      precision: 0
+      device_class: energy
+      state_class: total_increasing
+
+    - name: 'VE Battery Charged Energy'
+      unit_of_measurement: "kWh"
+      slave: 245
+      address: 302
+      data_type: uint16
+      scale: 0.1
+      precision: 0
+      device_class: energy
+      state_class: total_increasing
+
+ # Victron device over Modbus: vebus
+      # Grid Voltage
+    - name: 'VE Grid Voltage L1 in'
+      unit_of_measurement: "V AC"
+      slave: 246
+      address: 3
+      data_type: uint16
+      scale: 0.1
+      offset: 0
+      precision: 1
+      device_class: voltage
+
+    - name: 'VE Grid Voltage L2 in'
+      unit_of_measurement: "V AC"
+      slave: 246
+      address: 4
+      data_type: uint16
+      scale: 0.1
+      offset: 0
+      precision: 1
+      device_class: voltage
+
+    - name: 'VE Grid Voltage L3 in'
+      unit_of_measurement: "V AC"
+      slave: 246
+      address: 5
+      data_type: uint16
+      scale: 0.1
+      offset: 0
+      precision: 1
+      device_class: voltage
+      
+    - name: "VE Multi Inverter State"
+      slave: 246
+      address: 31
+      data_type: uint16
+      # Inverter States, 0=Off;1=Low Power;2=Fault;3=Bulk;4=Absorption;5=Float;6=Storage;7=Equalize;8=Passthru;9=Inverting;10=Power assist;11=Power supply;252=Bulk protection   
+ 
+#Alarm Sensors
+    - name: 'VE Grid lost alarm'
+      slave: 246
+      address: 64
+      data_type: uint16
+      unit_of_measurement: "0=Ok;1=Warning"
+      
+    - name: 'VE Multi Temperature alarm'
+      slave: 246
+      address: 34
+      data_type: uint16
+      unit_of_measurement: "0=Ok;1=Warning;2=Alarm"
+      
+    - name: 'VE Multi Overload alarm'
+      slave: 246
+      address: 36
+      data_type: uint16
+      unit_of_measurement: "0=Ok;1=Warning;2=Alarm"
+      
+# EV Charger sensors
+    - name: 'VE EV Charger Charge Power'
+      unit_of_measurement: "W"
+      slave: 40
+      address: 3821
+      data_type: uint16
+      scale: 1.0
+      precision: 0
+      device_class: energy
+      
+    - name: 'VE EV Charger State'
+      slave: 40
+      address: 3824
+      data_type: uint16
+      unit_of_measurement: "0=Disconnected; 1=Connected; 2=Charging; 3=Charged; 4=Waiting for sun; 5=Waiting for RFID; 6=Waiting for start; 7=Low SOC; 8=Ground fault; 9=Welded contacts; 10=CP Input shorted; 11=Residual current detected; 12=Under voltage detected; 13=Overvoltage detected; 14=Overheating detected"
+
+    - name: 'VE EV Charger Status'
+      slave: 40
+      address: 3826
+      data_type: uint16
+      unit_of_measurement: '0=stop;1=start'
+
+    - name: 'VE EV Charger Charge Current'
+      slave: 40
+      address: 3825
+      data_type: uint16
+      unit_of_measurement: "A"
+
+#### Binary sensors (no binary in victron) ########
+#    binary_sensors:    
