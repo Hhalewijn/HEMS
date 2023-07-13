@@ -17,4 +17,6 @@ Het doel is om echt dingen te integreren die out of the box werken.
 
 ![HEMS](https://github.com/RubenDijk/HEMS/blob/main/Image/012923_1144_TOHEMSdeel12.PNG "HEMS")
 
+Meer informatie over de ontwikkelversie voor Victron Energy Systems kun je hier vinden: https://github.com/victronenergy/dynamic-ess
+
 ### Meer info vindt u [hier](https://www.haroldhalewijn.nl/)
